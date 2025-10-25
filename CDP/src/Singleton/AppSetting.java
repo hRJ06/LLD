@@ -3,7 +3,10 @@ package Singleton;
 import java.util.Objects;
 
 public class AppSetting {
-    private static AppSetting instance;
+    /* private static AppSetting instance; */
+
+    /* volatile - Ensure visibility across thread. */
+    private static volatile AppSetting instance;
     private final String databaseURl;
     private final String apiKey;
 
@@ -12,9 +15,22 @@ public class AppSetting {
         apiKey = "test-API-Key";
     }
 
+    /* Non - Thread safe
+        private static AppSetting getInstance() {
+            if(Objects.isNull(instance)) {
+                instance = new AppSetting();
+            }
+            return instance;
+        }
+     */
+
     private static AppSetting getInstance() {
         if(Objects.isNull(instance)) {
-            instance = new AppSetting();
+            synchronized (AppSetting.class) {
+                if(Objects.isNull(instance)) {
+                    instance = new AppSetting();
+                }
+            }
         }
         return instance;
     }
