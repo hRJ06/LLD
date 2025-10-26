@@ -1,4 +1,4 @@
-package State_Design_Pattern;
+package State_Design_Pattern.V1;
 
 public class Train implements TransportationMode{
     @Override
