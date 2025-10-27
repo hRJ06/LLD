@@ -7,10 +7,10 @@ public class TicTacToeGame implements BoardGame{
     private final GameContext context;
     private Player currentPlayer;
 
-    public TicTacToeGame(PlayerStrategy playerXStrategy, PlayerStrategy playerOStrategy, int row, int col) {
+    public TicTacToeGame(PlayerStrategy playerXStrategy, PlayerStrategy playerOStrategy, PlayerFactory playerFactory, int row, int col) {
         this.board = new Board(row, col);
-        this.playerX = new Player(Symbol.X, playerXStrategy);
-        this.playerO = new Player(Symbol.O, playerOStrategy);
+        this.playerX = playerFactory.createPlayer(Symbol.X, playerXStrategy);
+        this.playerO = playerFactory.createPlayer(Symbol.O, playerOStrategy);
         this.context = new GameContext();
         this.currentPlayer = playerX;
     }
@@ -27,6 +27,11 @@ public class TicTacToeGame implements BoardGame{
             switchPlayer();
         } while (!context.isGameOver());
         announceResult();
+    }
+
+    @Override
+    public void addListener(GameEventListener listener) {
+        this.board.addListener(listener);
     }
 
     private void switchPlayer() {

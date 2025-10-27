@@ -1,11 +1,14 @@
 package Tic_Tac_Toe;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Board {
     private final int row;
     private final int col;
     private final Symbol[][] grid;
+    private final List<GameEventListener> eventListenerList;
 
     public Board(int row, int col) {
         this.row = row;
@@ -16,6 +19,11 @@ public class Board {
                 grid[i][j] = Symbol.EMPTY;
             }
         }
+        this.eventListenerList = new ArrayList<>();
+    }
+
+    public void addListener(GameEventListener eventListener) {
+        this.eventListenerList.add(eventListener);
     }
 
     public void printBoard() {
@@ -46,12 +54,14 @@ public class Board {
 
     public void makeMove(Position move, Symbol symbol) {
         grid[move.row][move.col] = symbol;
+        notifyMoveMade(move, symbol);
     }
 
     public void checkGameState(GameContext context) {
         for(int i = 0; i<row; i++) {
             if(grid[i][0] != Symbol.EMPTY && isWinningLine(grid[i])) {
                 context.next(true);
+                notifyGameStateChanged(context.getState());
                 return;
             }
         }
@@ -63,6 +73,7 @@ public class Board {
             }
             if(column[0] != Symbol.EMPTY && isWinningLine(column)) {
                 context.next(true);
+                notifyGameStateChanged(context.getState());
                 return;
             }
         }
@@ -75,13 +86,16 @@ public class Board {
         }
         if(diagonal1[0] != Symbol.EMPTY && isWinningLine(diagonal1)) {
             context.next(true);
+            notifyGameStateChanged(context.getState());
             return;
         }
         if(diagonal2[0] != Symbol.EMPTY && isWinningLine(diagonal2)) {
             context.next(true);
+            notifyGameStateChanged(context.getState());
         }
-    }
 
+        /* TODO - Draw */
+    }
 
     private boolean isWinningLine(Symbol[] line) {
         Symbol first = line[0];
@@ -91,5 +105,17 @@ public class Board {
             }
         }
         return true;
+    }
+
+    private void notifyMoveMade(Position position, Symbol symbol) {
+        for(GameEventListener listener : eventListenerList) {
+            listener.onMoveMade(position, symbol);
+        }
+    }
+
+    private void notifyGameStateChanged(GameState state) {
+        for(GameEventListener listener : eventListenerList) {
+            listener.onGameStateChanged(state);
+        }
     }
 }
