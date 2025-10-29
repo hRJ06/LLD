@@ -12,7 +12,7 @@ public class Board {
         initialize(row);
     }
 
-    public Board getInstance(int row) {
+    public static Board getInstance(int row) {
         if(Objects.isNull(instance)) {
             instance = new Board(row);
         }
@@ -36,6 +36,13 @@ public class Board {
                 board[i][j] = new Cell(i, j, null);
             }
         }
+    }
+
+    public Cell getCell(int row, int col) {
+        if(row >= 0 && row < board.length && col >= 0 && col < board.length) {
+            return board[row][col];
+        }
+        return null;
     }
 
     private void setPieceRow(int row, boolean isWhite) {
