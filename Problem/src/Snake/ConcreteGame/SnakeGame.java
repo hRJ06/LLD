@@ -2,7 +2,10 @@ package Snake.ConcreteGame;
 
 import Snake.*;
 import Snake.MovementStrategyPattern.MovementStrategy;
+import Snake.ObserverPattern.GameObserver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -12,6 +15,7 @@ public class SnakeGame implements BoardGame {
     private final int[][] foodPosition;
     private int foodIndex;
     private boolean gameRunning;
+    private final List<GameObserver> observers;
 
     public SnakeGame(MovementStrategy strategy, int width, int height, int[][] foodPosition) {
         this.board = Board.getInstance(width, height);
@@ -19,6 +23,11 @@ public class SnakeGame implements BoardGame {
         this.foodIndex = 0;
         this.gameRunning = true;
         this.snake = new Snake(strategy);
+        this.observers = new ArrayList<>();
+    }
+
+    public void addObserver(GameObserver observer) {
+        observers.add(observer);
     }
 
     @Override
@@ -61,6 +70,7 @@ public class SnakeGame implements BoardGame {
 
             if(crossBoundary || biteItself) {
                 System.out.println("GAME OVER! Score - " + snake.body.size());
+                notifyGameOver(score);
                 gameRunning = false;
                 continue;
             }
@@ -75,7 +85,8 @@ public class SnakeGame implements BoardGame {
 
             snake.body.addFirst(newHead);
             snake.positionMap.put(newHead, true);
-            score = snake.body.size();
+            score = snake.body.size() - 1;
+            notifyMoveMade(newHead);
         }
     }
 
@@ -100,6 +111,18 @@ public class SnakeGame implements BoardGame {
             default -> {
                 return "";
             }
+        }
+    }
+
+    private void notifyMoveMade(Position newHead) {
+        for(GameObserver observer : observers) {
+            observer.onMoveMade(newHead);
+        }
+    }
+
+    private void notifyGameOver(int score) {
+        for(GameObserver observer : observers) {
+            observer.onGameOver(score);
         }
     }
 }

@@ -3,6 +3,8 @@ package Snake;
 import Snake.ConcreteGame.SnakeGame;
 import Snake.MovementStrategyPattern.ConcreteStrategy.HumanMovementStrategy;
 import Snake.MovementStrategyPattern.MovementStrategy;
+import Snake.ObserverPattern.ConcreteObserver.ConsoleGameObserver;
+import Snake.ObserverPattern.GameObserver;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +17,11 @@ public class Main {
                 {12, 3}
         };
         MovementStrategy strategy = new HumanMovementStrategy();
+        GameObserver observer = new ConsoleGameObserver();
+
         SnakeGame game = new SnakeGame(strategy, width, height, foodPositions);
+        game.addObserver(observer);
+
         game.play();
     }
 }
