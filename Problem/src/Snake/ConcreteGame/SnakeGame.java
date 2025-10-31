@@ -1,6 +1,7 @@
 package Snake.ConcreteGame;
 
 import Snake.*;
+import Snake.FoodItemFactory.FoodItem;
 import Snake.MovementStrategyPattern.MovementStrategy;
 import Snake.ObserverPattern.GameObserver;
 
@@ -12,12 +13,12 @@ import java.util.Scanner;
 public class SnakeGame implements BoardGame {
     private final Board board;
     private final Snake snake;
-    private final int[][] foodPosition;
+    private final FoodItem[] foodPosition;
     private int foodIndex;
     private boolean gameRunning;
     private final List<GameObserver> observers;
 
-    public SnakeGame(MovementStrategy strategy, int width, int height, int[][] foodPosition) {
+    public SnakeGame(MovementStrategy strategy, int width, int height, FoodItem[] foodPosition) {
         this.board = Board.getInstance(width, height);
         this.foodPosition = foodPosition;
         this.foodIndex = 0;
@@ -69,15 +70,17 @@ public class SnakeGame implements BoardGame {
                     (newHeadRow != currentTail.getRow() && newHeadCol != currentTail.getCol());
 
             if(crossBoundary || biteItself) {
-                System.out.println("GAME OVER! Score - " + snake.body.size());
+                System.out.println("GAME OVER! Score - " + score);
                 notifyGameOver(score);
                 gameRunning = false;
                 continue;
             }
 
-            boolean ateFood = foodIndex < foodPosition.length && (Objects.equals(foodPosition[foodIndex][0], newHeadRow) && Objects.equals(foodPosition[foodIndex][1], newHeadCol));
+            boolean ateFood = foodIndex < foodPosition.length && (Objects.equals(foodPosition[foodIndex].getRow(), newHeadRow) && Objects.equals(foodPosition[foodIndex].getCol(), newHeadCol));
             if(ateFood) {
+                score += foodPosition[foodIndex].getPoints();
                 foodIndex += 1;
+                notifyScoreUpdate(score);
             } else {
                 snake.body.pollLast();
                 snake.positionMap.remove(currentTail);
@@ -85,7 +88,6 @@ public class SnakeGame implements BoardGame {
 
             snake.body.addFirst(newHead);
             snake.positionMap.put(newHead, true);
-            score = snake.body.size() - 1;
             notifyMoveMade(newHead);
         }
     }
@@ -123,6 +125,12 @@ public class SnakeGame implements BoardGame {
     private void notifyGameOver(int score) {
         for(GameObserver observer : observers) {
             observer.onGameOver(score);
+        }
+    }
+
+    private void notifyScoreUpdate(int score) {
+        for(GameObserver observer : observers) {
+            observer.onScoreUpdate(score);
         }
     }
 }
