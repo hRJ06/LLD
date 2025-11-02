@@ -1,0 +1,55 @@
+package File_System.CompositePattern;
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class FileSystemNode {
+
+    private String name;
+
+    private Map<String, FileSystemNode> children;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime modifiedAt;
+
+    public FileSystemNode(String name) {
+        this.name = name;
+        this.children = new HashMap<>();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void addChild(String name, FileSystemNode node) {
+        this.children.put(name, node);
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    private boolean hasChild(String name) {
+        return this.children.containsKey(name);
+    }
+
+    public void removeChild(String name) {
+        if(hasChild(name)) {
+            this.children.remove(name);
+            this.modifiedAt = LocalDateTime.now();
+        }
+    }
+
+    public abstract boolean isFile();
+    public abstract void display(int depth);
+
+    public String getName() {
+        return name;
+    }
+
+    public Collection<FileSystemNode> getChildren() {
+        return children.values();
+    }
+
+    public void updateModifiedAt() {
+        this.modifiedAt = LocalDateTime.now();
+    }
+}
