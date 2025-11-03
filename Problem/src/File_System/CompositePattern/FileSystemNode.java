@@ -27,8 +27,12 @@ public abstract class FileSystemNode {
         this.modifiedAt = LocalDateTime.now();
     }
 
-    private boolean hasChild(String name) {
+    public boolean hasChild(String name) {
         return this.children.containsKey(name);
+    }
+
+    public FileSystemNode getChild(String name) {
+        return this.children.get(name);
     }
 
     public void removeChild(String name) {
