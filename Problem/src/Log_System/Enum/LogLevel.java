@@ -1,3 +1,5 @@
+package Log_System.Enum;
+
 public enum LogLevel {
     INFO(1),
     DEBUG(2),
