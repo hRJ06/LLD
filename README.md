@@ -54,6 +54,8 @@ Each module focus on clean architecture, modularity, and reusability — essenti
 | **Adapter Method** | `Adapter/` | Convert interface (`SmartLightAdapter`, `CoffeeMachineAdapter)`. |
 | **Composite Factory** | `Composite/` | Tree structure for smart device (`CompositeSmartComponent`). |
 | **Decorator** | `Decorator/` | Add behavior dynamically (`MilkDecorator`, `SugarDecorator`). |
+| **Flyweight** | `FlyWeight/` | Optimize memory usage by sharing intrinsic state (`ParticleTypeFactory`, `Particle`). |
+| **Facade** | `Facade/` | Provide simplified interface to complex subsystem (`MediaFacade` - `MusicPlayer`, `VideoPlayer`, `ImageViewer`). |
 
 ---
 
