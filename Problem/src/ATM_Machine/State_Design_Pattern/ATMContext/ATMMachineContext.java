@@ -1,4 +1,4 @@
-package ATM_Machine.StateDesignPattern.ATMContext;
+package ATM_Machine.State_Design_Pattern.ATMContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 import ATM_Machine.Enum.CashType;
 import ATM_Machine.Enum.TransactionType;
-import ATM_Machine.StateDesignPattern.ATMState;
-import ATM_Machine.StateDesignPattern.ATMFactory.ATMStateFactory;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.HasCardState;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.IdleState;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.SelectOperationState;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.TransactionState;
+import ATM_Machine.State_Design_Pattern.ATMState;
+import ATM_Machine.State_Design_Pattern.ATMFactory.ATMStateFactory;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.HasCardState;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.IdleState;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.SelectOperationState;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.TransactionState;
 import ATM_Machine.Utility.ATMInventory;
 import ATM_Machine.Utility.Account;
 import ATM_Machine.Utility.Card;

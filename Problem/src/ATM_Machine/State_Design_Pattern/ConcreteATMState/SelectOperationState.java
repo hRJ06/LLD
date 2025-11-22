@@ -1,7 +1,7 @@
-package ATM_Machine.StateDesignPattern.ConcreteATMState;
+package ATM_Machine.State_Design_Pattern.ConcreteATMState;
 
-import ATM_Machine.StateDesignPattern.ATMState;
-import ATM_Machine.StateDesignPattern.ATMContext.ATMMachineContext;
+import ATM_Machine.State_Design_Pattern.ATMState;
+import ATM_Machine.State_Design_Pattern.ATMContext.ATMMachineContext;
 
 public class SelectOperationState implements ATMState {
     public SelectOperationState() {

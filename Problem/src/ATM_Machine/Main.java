@@ -1,7 +1,7 @@
 package ATM_Machine;
 
 import ATM_Machine.Enum.TransactionType;
-import ATM_Machine.StateDesignPattern.ATMContext.ATMMachineContext;
+import ATM_Machine.State_Design_Pattern.ATMContext.ATMMachineContext;
 import ATM_Machine.Utility.Account;
 import ATM_Machine.Utility.Card;
 

@@ -1,12 +1,12 @@
-package ATM_Machine.StateDesignPattern.ATMFactory;
+package ATM_Machine.State_Design_Pattern.ATMFactory;
 
 import java.util.Objects;
 
-import ATM_Machine.StateDesignPattern.ATMState;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.HasCardState;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.IdleState;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.SelectOperationState;
-import ATM_Machine.StateDesignPattern.ConcreteATMState.TransactionState;
+import ATM_Machine.State_Design_Pattern.ATMState;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.HasCardState;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.IdleState;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.SelectOperationState;
+import ATM_Machine.State_Design_Pattern.ConcreteATMState.TransactionState;
 
 public class ATMStateFactory {
     private static ATMStateFactory instance = null;
