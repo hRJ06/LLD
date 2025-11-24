@@ -68,6 +68,10 @@ public class WareHouse {
         return 0;
     }
 
+    public Product getProductBySKU(String SKU) {
+        return products.get(SKU);
+    }
+
     public Collection<Product> getAllProducts() {
         return products.values();
     }
